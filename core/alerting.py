@@ -79,7 +79,7 @@ class AlertDispatcher:
             details.append(f"**Payload/Cmd:** ```{payload_sample}```")
 
         embed = {
-            "title": f"[HoneyGuard Alert] {severity} Threat on {service} Decoy",
+            "title": f"🚨 HoneyGuard Alert: {severity} Threat on {service} Decoy",
             "color": color,
             "fields": [
                 {"name": "Attacker IP", "value": f"`{ip}` ({country} - {city})", "inline": True},
@@ -88,7 +88,7 @@ class AlertDispatcher:
                 {"name": "MITRE ATT&CK", "value": mitre, "inline": True},
                 {"name": "IoC Tags", "value": f"`{tags}`", "inline": False},
             ],
-            "footer": {"text": f"HoneyGuard SIEM | Timestamp: {event.get('timestamp')}"}
+            "footer": {"text": f"HoneyGuard SIEM • Timestamp: {event.get('timestamp')}"}
         }
 
         if details:
@@ -121,7 +121,7 @@ class AlertDispatcher:
         org = event.get("org", "Unknown")
         mitre = event.get("mitre_technique", "N/A")
 
-        text = f"[HoneyGuard Alert] *{severity}* Threat detected on *{service}* Honeypot from `{ip}` ({country}, {org}) - MITRE: {mitre}"
+        text = f"🚨 *[HoneyGuard Alert]* *{severity}* Threat detected on *{service}* Honeypot from `{ip}` ({country}, {org}) - MITRE: {mitre}"
         payload = {"text": text}
 
         try:

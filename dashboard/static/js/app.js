@@ -118,7 +118,7 @@ function prependAttackTableRow(attack, isNew = false) {
         <td>${targetDetail}</td>
         <td>${tagsHtml || '<span style="color: var(--text-muted);">None</span>'}</td>
         <td style="text-align: right;">
-            <button class="btn" style="padding: 4px 8px; font-size: 11px;" onclick="openDetailModal(${JSON.stringify(attack).replace(/"/g, '&quot;')})">Inspect</button>
+            <button class="btn" style="padding: 4px 8px; font-size: 11px;" onclick="openDetailModal(${JSON.stringify(attack).replace(/"/g, '&quot;')})">🔍 Inspect</button>
         </td>
     `;
 
@@ -372,7 +372,7 @@ function toggleAudio() {
     soundEnabled = !soundEnabled;
     const btn = document.getElementById("btn-sound-toggle");
     if (btn) {
-        btn.innerHTML = soundEnabled ? 'Sound: ON' : 'Sound: OFF';
+        btn.innerHTML = soundEnabled ? '🔊 Sound: ON' : '🔇 Sound: OFF';
         btn.style.color = soundEnabled ? 'var(--accent-green)' : 'var(--text-secondary)';
     }
 }
