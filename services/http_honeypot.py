@@ -204,7 +204,7 @@ class HTTPHoneypotHandler(BaseHTTPRequestHandler):
         threat_logger.log_event(event)
         alert_dispatcher.dispatch(event)
 
-        logger.info(f"🌐 [HTTP PROBE] IP={client_ip} Method={method} Path='{self.path}' Risk={score} ({severity})")
+        logger.info(f"[HTTP PROBE] IP={client_ip} Method={method} Path='{self.path}' Risk={score} ({severity})")
         return event
 
     def _serve_response(self, status_code: int, content: str, content_type: str = "text/html"):
@@ -249,7 +249,7 @@ class HTTPHoneypotHandler(BaseHTTPRequestHandler):
         # Respond with realistic fake authentication failure or redirect
         if "/login" in self.path or "/wp-login" in self.path:
             # Fake invalid credentials error
-            self._serve_response(401, DECOY_LOGIN_HTML.replace('<form method="POST"', '<div class="alert">⚠️ Invalid credentials. Incident has been logged.</div><form method="POST"'))
+            self._serve_response(401, DECOY_LOGIN_HTML.replace('<form method="POST"', '<div class="alert">[!] Invalid credentials. Incident has been logged.</div><form method="POST"'))
         else:
             self._serve_response(200, '{"status": "error", "message": "Access denied. Operation logged."}', "application/json")
 
@@ -281,7 +281,7 @@ class HTTPHoneypotService:
 
     def start(self):
         self.httpd = HTTPServer((self.host, self.port), HTTPHoneypotHandler)
-        logger.info(f"🌐 [HTTP HONEYPOT] Listening on http://{self.host}:{self.port} (Server: {settings.HTTP_SERVER_BANNER})")
+        logger.info(f"[HTTP HONEYPOT] Listening on http://{self.host}:{self.port} (Server: {settings.HTTP_SERVER_BANNER})")
         self.thread = threading.Thread(target=self.httpd.serve_forever, daemon=True, name="HTTPHoneypotThread")
         self.thread.start()
 
@@ -289,6 +289,6 @@ class HTTPHoneypotService:
         if self.httpd:
             self.httpd.shutdown()
             self.httpd.server_close()
-        logger.info("🛑 [HTTP HONEYPOT] Stopped.")
+        logger.info("[HTTP HONEYPOT] Stopped.")
 
 http_service = HTTPHoneypotService()

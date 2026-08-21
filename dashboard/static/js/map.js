@@ -51,7 +51,7 @@ function addAttackMarker(event, shouldPulse = true) {
     const popupHtml = `
         <div style="font-size: 12px; line-height: 1.4;">
             <div style="font-weight: 700; color: ${color}; margin-bottom: 4px;">
-                🚨 ${event.severity} Attack on ${event.service}
+                [${event.severity}] Attack on ${event.service}
             </div>
             <div><strong>IP:</strong> <code>${ip}</code></div>
             <div><strong>Location:</strong> ${event.city || 'Unknown'}, ${event.country || 'Unknown'} (${event.country_code || 'XX'})</div>

@@ -18,12 +18,12 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.add(websocket)
-        logger.info(f"📡 New SOC Dashboard client connected (Total: {len(self.active_connections)})")
+        logger.info(f"[WS] New SOC Dashboard client connected (Total: {len(self.active_connections)})")
 
     def disconnect(self, websocket: WebSocket):
         if websocket in self.active_connections:
             self.active_connections.remove(websocket)
-            logger.info(f"🔌 SOC Dashboard client disconnected (Total: {len(self.active_connections)})")
+            logger.info(f"[WS] SOC Dashboard client disconnected (Total: {len(self.active_connections)})")
 
     async def broadcast(self, message: dict):
         if not self.active_connections:

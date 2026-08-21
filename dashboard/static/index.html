@@ -20,7 +20,7 @@
     <!-- Header Navbar -->
     <header class="navbar">
         <div class="nav-brand">
-            <span class="brand-icon">🛡️</span>
+            <span class="brand-icon" style="font-weight: 700; color: var(--accent-blue);">[HG]</span>
             <div>
                 <div class="brand-title">HONEYGUARD // SENTINEL SOC</div>
                 <div style="font-size: 11px; color: var(--text-secondary); letter-spacing: 0.5px;">Intelligent Decoy & Threat Telemetry Platform</div>
@@ -36,8 +36,8 @@
         </div>
 
         <div class="nav-actions">
-            <button id="btn-sound-toggle" class="btn" onclick="toggleAudio()">🔇 Sound: OFF</button>
-            <a href="/api/iocs/export?format=csv" class="btn btn-primary" download>📥 Export IoCs</a>
+            <button id="btn-sound-toggle" class="btn" onclick="toggleAudio()">Sound: OFF</button>
+            <a href="/api/iocs/export?format=csv" class="btn btn-primary" download>Export IoCs</a>
         </div>
     </header>
 
@@ -46,10 +46,10 @@
 
         <!-- Navigation Tabs -->
         <nav class="tabs-header">
-            <button id="tab-btn-live" class="tab-btn active" onclick="switchTab('live')">⚡ Live Threat Monitoring</button>
-            <button id="tab-btn-iocs" class="tab-btn" onclick="switchTab('iocs')">🎯 IoC Threat Intel</button>
-            <button id="tab-btn-security-plus" class="tab-btn" onclick="switchTab('security-plus')">📚 Security+ Knowledge Hub</button>
-            <button id="tab-btn-settings" class="tab-btn" onclick="switchTab('settings')">⚙️ Webhooks & Config</button>
+            <button id="tab-btn-live" class="tab-btn active" onclick="switchTab('live')">Live Threat Monitoring</button>
+            <button id="tab-btn-iocs" class="tab-btn" onclick="switchTab('iocs')">IoC Threat Intel</button>
+            <button id="tab-btn-security-plus" class="tab-btn" onclick="switchTab('security-plus')">Security+ Knowledge Hub</button>
+            <button id="tab-btn-settings" class="tab-btn" onclick="switchTab('settings')">Webhooks & Config</button>
         </nav>
 
         <!-- TAB 1: LIVE MONITORING -->
@@ -62,43 +62,43 @@
                         <h4>Total Interceptions</h4>
                         <div id="kpi-total-attacks" class="kpi-value" style="color: var(--accent-blue);">0</div>
                     </div>
-                    <div class="kpi-icon">🎯</div>
+                    <div class="kpi-icon" style="font-size: 16px; font-weight: 700; color: var(--accent-blue);">TOTAL</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-info">
                         <h4>Unique Adversaries</h4>
                         <div id="kpi-unique-ips" class="kpi-value" style="color: var(--accent-cyan);">0</div>
                     </div>
-                    <div class="kpi-icon">🌐</div>
+                    <div class="kpi-icon" style="font-size: 16px; font-weight: 700; color: var(--accent-cyan);">IPS</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-info">
                         <h4>High / Critical Threats</h4>
                         <div id="kpi-high-risk" class="kpi-value" style="color: var(--accent-red);">0</div>
                     </div>
-                    <div class="kpi-icon">🚨</div>
+                    <div class="kpi-icon" style="font-size: 16px; font-weight: 700; color: var(--accent-red);">CRIT</div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-info">
                         <h4>Active Decoy Services</h4>
                         <div class="kpi-value" style="color: var(--accent-green);">2</div>
                     </div>
-                    <div class="kpi-icon">🛡️</div>
+                    <div class="kpi-icon" style="font-size: 16px; font-weight: 700; color: var(--accent-green);">ONLINE</div>
                 </div>
             </div>
 
             <!-- Attack Simulator Launchpad -->
             <div class="simulator-panel" style="margin-top: 18px;">
                 <div style="font-weight: 600; font-size: 13px; color: var(--accent-purple); display: flex; align-items: center; gap: 6px;">
-                    <span>🔥 Red Team Simulator:</span>
+                    <span>Red Team Simulator:</span>
                 </div>
-                <button class="sim-btn" onclick="launchSimulation('ssh_brute')">🔑 SSH Brute Force</button>
-                <button class="sim-btn" onclick="launchSimulation('sqli')">💉 Web SQL Injection</button>
-                <button class="sim-btn" onclick="launchSimulation('traversal')">📂 Directory Traversal</button>
-                <button class="sim-btn" onclick="launchSimulation('env_leak')">📄 .env Credential Hunt</button>
-                <button class="sim-btn" onclick="launchSimulation('log4shell')">⚡ Log4Shell Probe</button>
-                <button class="sim-btn" onclick="launchSimulation('ssh_dropper')">💻 SSH Interactive Dropper</button>
-                <button class="sim-btn" style="border-color: var(--accent-red); color: var(--accent-red);" onclick="launchSimulation('all')">🚀 Launch Full Campaign</button>
+                <button class="sim-btn" onclick="launchSimulation('ssh_brute')">SSH Brute Force</button>
+                <button class="sim-btn" onclick="launchSimulation('sqli')">Web SQL Injection</button>
+                <button class="sim-btn" onclick="launchSimulation('traversal')">Directory Traversal</button>
+                <button class="sim-btn" onclick="launchSimulation('env_leak')">.env Credential Hunt</button>
+                <button class="sim-btn" onclick="launchSimulation('log4shell')">Log4Shell Probe</button>
+                <button class="sim-btn" onclick="launchSimulation('ssh_dropper')">SSH Interactive Dropper</button>
+                <button class="sim-btn" style="border-color: var(--accent-red); color: var(--accent-red);" onclick="launchSimulation('all')">Launch Full Campaign</button>
             </div>
 
             <!-- Threat Map & Analytics Grid -->
@@ -106,7 +106,7 @@
                 <!-- GeoIP World Map -->
                 <div class="panel">
                     <div class="panel-header">
-                        <div class="panel-title">🌍 Global Attack Telemetry Map</div>
+                        <div class="panel-title">Global Attack Telemetry Map</div>
                         <span style="font-size: 11px; color: var(--text-muted);">Real-time Geolocation Beacon</span>
                     </div>
                     <div class="panel-body" style="padding: 0;">
@@ -117,7 +117,7 @@
                 <!-- Threat Breakdown Analytics -->
                 <div class="panel">
                     <div class="panel-header">
-                        <div class="panel-title">📊 Attack Classification & MITRE Tactics</div>
+                        <div class="panel-title">Attack Classification & MITRE Tactics</div>
                     </div>
                     <div class="panel-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; height: 380px;">
                         <div>
@@ -139,7 +139,7 @@
             <!-- Real-time Live Threat Table -->
             <div class="panel" style="margin-top: 18px;">
                 <div class="panel-header">
-                    <div class="panel-title">⚡ Live Interception Stream</div>
+                    <div class="panel-title">Live Interception Stream</div>
                     <div style="display: flex; gap: 8px;">
                         <input id="search-input" type="text" placeholder="Search IP, user, payload..." style="background: #0d1117; border: 1px solid var(--border-color); color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 12px;" oninput="filterTable()">
                     </div>
@@ -170,7 +170,7 @@
         <div id="tab-content-iocs" class="tab-content">
             <div class="panel">
                 <div class="panel-header">
-                    <div class="panel-title">🎯 Captured Indicators of Compromise (IoCs)</div>
+                    <div class="panel-title">Captured Indicators of Compromise (IoCs)</div>
                     <div style="display: flex; gap: 8px;">
                         <a href="/api/iocs/export?format=csv" class="btn" download>Export CSV</a>
                         <a href="/api/iocs/export?format=json" class="btn" download>Export JSON</a>
@@ -199,7 +199,7 @@
             <!-- Top Passwords Chart -->
             <div class="panel" style="margin-top: 18px;">
                 <div class="panel-header">
-                    <div class="panel-title">🔑 Top Attempted Passwords (Credential Stuffing Intelligence)</div>
+                    <div class="panel-title">Top Attempted Passwords (Credential Stuffing Intelligence)</div>
                 </div>
                 <div class="panel-body" style="height: 300px;">
                     <canvas id="chart-passwords"></canvas>
@@ -212,7 +212,7 @@
             <div class="grid-2">
                 <div class="panel">
                     <div class="panel-header">
-                        <div class="panel-title">📖 CompTIA Security+ SY0-701 Domain Mapping</div>
+                        <div class="panel-title">CompTIA Security+ SY0-701 Domain Mapping</div>
                     </div>
                     <div class="panel-body" style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
                         <h4 style="color: var(--accent-blue); margin-bottom: 8px;">Domain 1.0: General Security Concepts & Deception Technologies</h4>
@@ -233,7 +233,7 @@
 
                 <div class="panel">
                     <div class="panel-header">
-                        <div class="panel-title">🛡️ Incident Response (IR) Playbook</div>
+                        <div class="panel-title">Incident Response (IR) Playbook</div>
                     </div>
                     <div class="panel-body" style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
                         <ol style="margin-left: 20px;">
@@ -252,7 +252,7 @@
         <div id="tab-content-settings" class="tab-content">
             <div class="panel" style="max-width: 700px; margin: 0 auto;">
                 <div class="panel-header">
-                    <div class="panel-title">⚙️ Real-time Webhook Configuration</div>
+                    <div class="panel-title">Real-time Webhook Configuration</div>
                 </div>
                 <div class="panel-body" style="display: flex; flex-direction: column; gap: 16px;">
                     <div>
@@ -274,7 +274,7 @@
     <!-- Event Detail Inspector Modal -->
     <div id="event-modal" class="modal-overlay" onclick="if(event.target === this) closeModal()">
         <div class="modal-container">
-            <button class="modal-close" onclick="closeModal()">✕</button>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
             <div id="modal-event-details">
                 <!-- Populated via JS -->
             </div>
@@ -294,7 +294,7 @@
                     body: JSON.stringify({ discord_webhook_url: discordUrl, slack_webhook_url: slackUrl })
                 });
                 const data = await res.json();
-                statusDiv.innerText = "✓ " + data.message;
+                statusDiv.innerText = "[OK] " + data.message;
             } catch(e) {
                 statusDiv.innerText = "Error: " + e.message;
                 statusDiv.style.color = "var(--accent-red)";

@@ -185,7 +185,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     print("=" * 65)
-    print("  🔥 HONEYGUARD ATTACK SIMULATOR & THREAT INGESTION TESTER 🔥  ")
+    print("  HONEYGUARD ATTACK SIMULATOR & THREAT INGESTION TESTER  ")
     print("=" * 65)
     
     if args.scenario in ("ssh_brute", "all"):
@@ -198,4 +198,4 @@ if __name__ == "__main__":
     if args.scenario in ("ssh_dropper", "all"):
         simulate_ssh_interactive_dropper(port=args.ssh_port)
         
-    print("\n[✔] Simulation run finished. Check your HoneyGuard Dashboard & SIEM logs!")
+    print("\n[+] Simulation run finished. Check your HoneyGuard Dashboard & SIEM logs!")

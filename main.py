@@ -63,7 +63,7 @@ def main():
     signal.signal(signal.SIGTERM, handle_exit)
 
     # 4. Start FastAPI Uvicorn Server (blocks in main thread)
-    logger.info(f"🚀 Starting HoneyGuard Dashboard on http://{settings.DASHBOARD_HOST}:{settings.DASHBOARD_PORT}")
+    logger.info(f"[+] Starting HoneyGuard Dashboard on http://{settings.DASHBOARD_HOST}:{settings.DASHBOARD_PORT}")
     try:
         uvicorn.run(
             app,

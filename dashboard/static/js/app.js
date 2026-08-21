@@ -45,7 +45,7 @@ function connectWebSocket() {
     socket = new WebSocket(wsUrl);
 
     socket.onopen = () => {
-        console.log("🟢 Connected to HoneyGuard Live Attack Stream");
+        console.log("[WS] Connected to HoneyGuard Live Attack Stream");
         const pill = document.getElementById("connection-status");
         if (pill) {
             pill.innerHTML = '<span class="status-dot"></span> LIVE FEED ACTIVE';
@@ -66,7 +66,7 @@ function connectWebSocket() {
     };
 
     socket.onclose = () => {
-        console.warn("🔴 Disconnected from Live Attack Stream. Reconnecting in 3s...");
+        console.warn("[WS] Disconnected from Live Attack Stream. Reconnecting in 3s...");
         const pill = document.getElementById("connection-status");
         if (pill) {
             pill.innerHTML = '<span class="status-dot" style="background-color: var(--accent-red); box-shadow: 0 0 8px var(--accent-red);"></span> DISCONNECTED';
@@ -118,7 +118,7 @@ function prependAttackTableRow(attack, isNew = false) {
         <td>${targetDetail}</td>
         <td>${tagsHtml || '<span style="color: var(--text-muted);">None</span>'}</td>
         <td style="text-align: right;">
-            <button class="btn" style="padding: 4px 8px; font-size: 11px;" onclick="openDetailModal(${JSON.stringify(attack).replace(/"/g, '&quot;')})">🔍 Inspect</button>
+            <button class="btn" style="padding: 4px 8px; font-size: 11px;" onclick="openDetailModal(${JSON.stringify(attack).replace(/"/g, '&quot;')})">Inspect</button>
         </td>
     `;
 
@@ -372,7 +372,7 @@ function toggleAudio() {
     soundEnabled = !soundEnabled;
     const btn = document.getElementById("btn-sound-toggle");
     if (btn) {
-        btn.innerHTML = soundEnabled ? '🔊 Sound: ON' : '🔇 Sound: OFF';
+        btn.innerHTML = soundEnabled ? 'Sound: ON' : 'Sound: OFF';
         btn.style.color = soundEnabled ? 'var(--accent-green)' : 'var(--text-secondary)';
     }
 }

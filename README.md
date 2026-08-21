@@ -1,10 +1,10 @@
-# 🛡️ HoneyGuard: Intelligent Multi-Service Honeypot & SOC Telemetry Sentinel
+# HoneyGuard: Intelligent Multi-Service Honeypot & SOC Telemetry Sentinel
 
 > **A deliberate, low-interaction Python honeypot mimicking vulnerable SSH & HTTP services with GeoIP enrichment, Discord/Slack alerting, real-time SOC dashboard, and CompTIA Security+ aligned IoC threat intelligence.**
 
 ---
 
-## 🎯 Architecture Overview
+## Architecture Overview
 
 ```
                         [ Attacker / Botnet ]
@@ -37,7 +37,7 @@
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 1. **Fake SSH Honeypot (`services/ssh_honeypot.py`)**:
    - Paramiko-based low-interaction SSH server on port `2222`.
@@ -75,7 +75,7 @@
 
 ---
 
-## 🛠️ Installation & Quick Start
+## Installation & Quick Start
 
 ### 1. Install Dependencies
 ```bash
@@ -103,7 +103,7 @@ http://127.0.0.1:8000
 
 ---
 
-## 🧪 Testing with Attack Simulator
+## Testing with Attack Simulator
 
 In a separate terminal, execute realistic attack simulations:
 
@@ -121,7 +121,7 @@ python simulator/attack_simulator.py --scenario ssh_dropper
 
 ---
 
-## 📡 REST API & IoC Export Endpoints
+## REST API & IoC Export Endpoints
 
 - `GET /api/stats` - Summary KPI metrics and MITRE breakdown
 - `GET /api/events` - Filterable, paginated raw attack telemetry

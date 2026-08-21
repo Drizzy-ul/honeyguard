@@ -96,7 +96,7 @@ class FakeSSHServer(paramiko.ServerInterface):
         threat_logger.log_event(event)
         alert_dispatcher.dispatch(event)
         
-        logger.info(f"🚨 [SSH AUTH] IP={self.client_ip} User='{username}' Pass='{password}' Risk={score} ({severity})")
+        logger.info(f"[SSH AUTH] IP={self.client_ip} User='{username}' Pass='{password}' Risk={score} ({severity})")
 
         if settings.SSH_ALLOW_INTERACTIVE:
             return paramiko.AUTH_SUCCESSFUL
@@ -178,7 +178,7 @@ class FakeSSHServer(paramiko.ServerInterface):
         db.insert_event_sync(event)
         threat_logger.log_event(event)
         alert_dispatcher.dispatch(event)
-        logger.warning(f"⚠️ [SSH CMD INTERCEPT] IP={self.client_ip} Cmd='{cmd_str}' Severity={severity}")
+        logger.warning(f"[SSH CMD INTERCEPT] IP={self.client_ip} Cmd='{cmd_str}' Severity={severity}")
 
         # Send realistic mock output back to decoy terminal
         output = self._get_fake_command_response(cmd_str)
@@ -309,7 +309,7 @@ class SSHHoneypotService:
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(100)
-        logger.info(f"🛡️  [SSH HONEYPOT] Listening on {self.host}:{self.port} (Banner: {settings.SSH_BANNER})")
+        logger.info(f"[SSH HONEYPOT] Listening on {self.host}:{self.port} (Banner: {settings.SSH_BANNER})")
 
         self.thread = threading.Thread(target=self._accept_loop, daemon=True, name="SSHHoneypotThread")
         self.thread.start()
@@ -335,6 +335,6 @@ class SSHHoneypotService:
                 self.server_socket.close()
             except Exception:
                 pass
-        logger.info("🛑 [SSH HONEYPOT] Stopped.")
+        logger.info("[SSH HONEYPOT] Stopped.")
 
 ssh_service = SSHHoneypotService()
