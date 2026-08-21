@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoneyGuard - Threat Intelligence SOC & Honeypot Sentinel</title>
+    
+    <!-- Leaflet Map CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Custom SOC Stylesheet -->
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">🛡️</span>
+            <div>
+                <div class="brand-title">HONEYGUARD // SENTINEL SOC</div>
+                <div style="font-size: 11px; color: var(--text-secondary); letter-spacing: 0.5px;">Intelligent Decoy & Threat Telemetry Platform</div>
+            </div>
+        </div>
+
+        <div class="nav-badges">
+            <span id="badge-ssh-port" class="badge-port active">SSH: 2222</span>
+            <span id="badge-http-port" class="badge-port active">HTTP: 8080</span>
+            <div id="connection-status" class="status-pill">
+                <span class="status-dot"></span> LIVE FEED CONNECTING
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <button id="btn-sound-toggle" class="btn" onclick="toggleAudio()">🔇 Sound: OFF</button>
+            <a href="/api/iocs/export?format=csv" class="btn btn-primary" download>📥 Export IoCs</a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-header">
+            <button id="tab-btn-live" class="tab-btn active" onclick="switchTab('live')">⚡ Live Threat Monitoring</button>
+            <button id="tab-btn-iocs" class="tab-btn" onclick="switchTab('iocs')">🎯 IoC Threat Intel</button>
+            <button id="tab-btn-security-plus" class="tab-btn" onclick="switchTab('security-plus')">📚 Security+ Knowledge Hub</button>
+            <button id="tab-btn-settings" class="tab-btn" onclick="switchTab('settings')">⚙️ Webhooks & Config</button>
+        </nav>
+
+        <!-- TAB 1: LIVE MONITORING -->
+        <div id="tab-content-live" class="tab-content active">
+            
+            <!-- KPI Metric Bar -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <h4>Total Interceptions</h4>
+                        <div id="kpi-total-attacks" class="kpi-value" style="color: var(--accent-blue);">0</div>
+                    </div>
+                    <div class="kpi-icon">🎯</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <h4>Unique Adversaries</h4>
+                        <div id="kpi-unique-ips" class="kpi-value" style="color: var(--accent-cyan);">0</div>
+                    </div>
+                    <div class="kpi-icon">🌐</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <h4>High / Critical Threats</h4>
+                        <div id="kpi-high-risk" class="kpi-value" style="color: var(--accent-red);">0</div>
+                    </div>
+                    <div class="kpi-icon">🚨</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-info">
+                        <h4>Active Decoy Services</h4>
+                        <div class="kpi-value" style="color: var(--accent-green);">2</div>
+                    </div>
+                    <div class="kpi-icon">🛡️</div>
+                </div>
+            </div>
+
+            <!-- Attack Simulator Launchpad -->
+            <div class="simulator-panel" style="margin-top: 18px;">
+                <div style="font-weight: 600; font-size: 13px; color: var(--accent-purple); display: flex; align-items: center; gap: 6px;">
+                    <span>🔥 Red Team Simulator:</span>
+                </div>
+                <button class="sim-btn" onclick="launchSimulation('ssh_brute')">🔑 SSH Brute Force</button>
+                <button class="sim-btn" onclick="launchSimulation('sqli')">💉 Web SQL Injection</button>
+                <button class="sim-btn" onclick="launchSimulation('traversal')">📂 Directory Traversal</button>
+                <button class="sim-btn" onclick="launchSimulation('env_leak')">📄 .env Credential Hunt</button>
+                <button class="sim-btn" onclick="launchSimulation('log4shell')">⚡ Log4Shell Probe</button>
+                <button class="sim-btn" onclick="launchSimulation('ssh_dropper')">💻 SSH Interactive Dropper</button>
+                <button class="sim-btn" style="border-color: var(--accent-red); color: var(--accent-red);" onclick="launchSimulation('all')">🚀 Launch Full Campaign</button>
+            </div>
+
+            <!-- Threat Map & Analytics Grid -->
+            <div class="grid-2" style="margin-top: 18px;">
+                <!-- GeoIP World Map -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🌍 Global Attack Telemetry Map</div>
+                        <span style="font-size: 11px; color: var(--text-muted);">Real-time Geolocation Beacon</span>
+                    </div>
+                    <div class="panel-body" style="padding: 0;">
+                        <div id="attack-map"></div>
+                    </div>
+                </div>
+
+                <!-- Threat Breakdown Analytics -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📊 Attack Classification & MITRE Tactics</div>
+                    </div>
+                    <div class="panel-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; height: 380px;">
+                        <div>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; text-align: center;">MITRE ATT&CK Vectors</div>
+                            <div style="position: relative; height: 330px;">
+                                <canvas id="chart-mitre"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; text-align: center;">Top Attacking Origins</div>
+                            <div style="position: relative; height: 330px;">
+                                <canvas id="chart-countries"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Live Threat Table -->
+            <div class="panel" style="margin-top: 18px;">
+                <div class="panel-header">
+                    <div class="panel-title">⚡ Live Interception Stream</div>
+                    <div style="display: flex; gap: 8px;">
+                        <input id="search-input" type="text" placeholder="Search IP, user, payload..." style="background: #0d1117; border: 1px solid var(--border-color); color: #fff; padding: 4px 10px; border-radius: 4px; font-size: 12px;" oninput="filterTable()">
+                    </div>
+                </div>
+                <div class="panel-body table-container" style="padding: 0;">
+                    <table class="threat-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 100px;">Timestamp</th>
+                                <th style="width: 90px;">Severity</th>
+                                <th style="width: 80px;">Service</th>
+                                <th style="width: 220px;">Attacker Origin</th>
+                                <th>Target / Intercept</th>
+                                <th>IoC Tags</th>
+                                <th style="width: 90px; text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="threat-feed-body">
+                            <!-- Populated dynamically via JS/WebSocket -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: IOC THREAT INTEL -->
+        <div id="tab-content-iocs" class="tab-content">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">🎯 Captured Indicators of Compromise (IoCs)</div>
+                    <div style="display: flex; gap: 8px;">
+                        <a href="/api/iocs/export?format=csv" class="btn" download>Export CSV</a>
+                        <a href="/api/iocs/export?format=json" class="btn" download>Export JSON</a>
+                        <a href="/api/iocs/export?format=snort" class="btn btn-primary" download>Export IDS Rules (Snort/Suricata)</a>
+                    </div>
+                </div>
+                <div class="panel-body table-container" style="padding: 0;">
+                    <table class="threat-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 160px;">IoC Category</th>
+                                <th>Indicator Value / Signature</th>
+                                <th style="width: 110px;">Threat Level</th>
+                                <th style="width: 90px;">Hits</th>
+                                <th style="width: 180px;">Last Seen</th>
+                                <th>Investigation Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ioc-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Top Passwords Chart -->
+            <div class="panel" style="margin-top: 18px;">
+                <div class="panel-header">
+                    <div class="panel-title">🔑 Top Attempted Passwords (Credential Stuffing Intelligence)</div>
+                </div>
+                <div class="panel-body" style="height: 300px;">
+                    <canvas id="chart-passwords"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: SECURITY+ KNOWLEDGE HUB -->
+        <div id="tab-content-security-plus" class="tab-content">
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">📖 CompTIA Security+ SY0-701 Domain Mapping</div>
+                    </div>
+                    <div class="panel-body" style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
+                        <h4 style="color: var(--accent-blue); margin-bottom: 8px;">Domain 1.0: General Security Concepts & Deception Technologies</h4>
+                        <p style="margin-bottom: 12px;"><strong>Honeypots & Decoys:</strong> A honeypot is a deliberate, vulnerable decoy system designed to deceive attackers, detect unauthorized access, and capture attacker TTPs (Tactics, Techniques, and Procedures) without endangering production systems.</p>
+
+                        <h4 style="color: var(--accent-purple); margin-bottom: 8px;">Domain 2.0: Threats, Vulnerabilities & Mitigations</h4>
+                        <ul style="margin-left: 20px; margin-bottom: 12px;">
+                            <li><strong>T1110 Brute Force & Credential Stuffing:</strong> Automated dictionary attacks against SSH (port 22/2222) and Web admin portals.</li>
+                            <li><strong>T1190 Exploit Public-Facing Application:</strong> SQL Injection, Path Traversal, and Log4Shell payload injections.</li>
+                            <li><strong>T1083 File & Directory Discovery:</strong> Probing for <code>/.env</code>, <code>/.git/config</code>, and backup files.</li>
+                            <li><strong>T1059 Command & Scripting Interpreters:</strong> Shell commands used to download droppers (<code>wget</code>, <code>curl | bash</code>).</li>
+                        </ul>
+
+                        <h4 style="color: var(--accent-green); margin-bottom: 8px;">Domain 4.0: Security Operations & SIEM Log Analysis</h4>
+                        <p>HoneyGuard generates structured JSONL event streams matching modern SIEM parsers (Splunk, Elastic SIEM, Microsoft Sentinel) for correlation and IoC hunting.</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">🛡️ Incident Response (IR) Playbook</div>
+                    </div>
+                    <div class="panel-body" style="font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
+                        <ol style="margin-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong style="color: #fff;">1. Preparation:</strong> Deploy low-interaction decoy sensors across DMZ and internal VLANs to catch lateral movement.</li>
+                            <li style="margin-bottom: 8px;"><strong style="color: #fff;">2. Detection & Analysis:</strong> Extract source IPs, User-Agents, and intercepted credential payloads. Identify whether the attack is opportunistic (botnet) or targeted.</li>
+                            <li style="margin-bottom: 8px;"><strong style="color: #fff;">3. Containment:</strong> Export captured high-risk adversary IPs and apply immediate firewall / ACL ban rules or cloud security group blocks.</li>
+                            <li style="margin-bottom: 8px;"><strong style="color: #fff;">4. Eradication:</strong> Inspect downloaded dropper URLs and hashes (e.g. <code>wget http://malware...</code>) and block domains at the DNS/Proxy level.</li>
+                            <li style="margin-bottom: 8px;"><strong style="color: #fff;">5. Post-Incident Review:</strong> Add newly uncovered passwords and usernames to corporate password blocklists (Active Directory Fine-Grained Password Policies).</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: SETTINGS & WEBHOOKS -->
+        <div id="tab-content-settings" class="tab-content">
+            <div class="panel" style="max-width: 700px; margin: 0 auto;">
+                <div class="panel-header">
+                    <div class="panel-title">⚙️ Real-time Webhook Configuration</div>
+                </div>
+                <div class="panel-body" style="display: flex; flex-direction: column; gap: 16px;">
+                    <div>
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px;">Discord Webhook URL</label>
+                        <input id="setting-discord-webhook" type="text" placeholder="https://discord.com/api/webhooks/..." style="width: 100%; box-sizing: border-box; background: #0d1117; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 6px; font-size: 13px;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px;">Slack Webhook URL</label>
+                        <input id="setting-slack-webhook" type="text" placeholder="https://hooks.slack.com/services/..." style="width: 100%; box-sizing: border-box; background: #0d1117; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 6px; font-size: 13px;">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveWebhookSettings()">Save & Test Webhooks</button>
+                    <div id="settings-save-status" style="font-size: 12px; color: var(--accent-green);"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Event Detail Inspector Modal -->
+    <div id="event-modal" class="modal-overlay" onclick="if(event.target === this) closeModal()">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modal-event-details">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function saveWebhookSettings() {
+            const discordUrl = document.getElementById("setting-discord-webhook").value;
+            const slackUrl = document.getElementById("setting-slack-webhook").value;
+            const statusDiv = document.getElementById("settings-save-status");
+            
+            try {
+                const res = await fetch("/api/settings/webhooks", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ discord_webhook_url: discordUrl, slack_webhook_url: slackUrl })
+                });
+                const data = await res.json();
+                statusDiv.innerText = "✓ " + data.message;
+            } catch(e) {
+                statusDiv.innerText = "Error: " + e.message;
+                statusDiv.style.color = "var(--accent-red)";
+            }
+        }
+    </script>
+    <script src="/static/js/map.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

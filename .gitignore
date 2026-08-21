@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Keys & Secrets (Security Best Practice)
+keys/*.key
+keys/*.pub
+.env
+
+# Database & Runtime logs
+data/*.db
+data/*.sqlite3
+logs/*.log
+logs/*.jsonl
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE & OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
