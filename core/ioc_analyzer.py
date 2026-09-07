@@ -125,7 +125,8 @@ class IoCAnalyzer:
         severity = "LOW"
         mitre = "T1595.002 (Vulnerability Scanning)"
 
-        raw_target = f"{path} {body}"
+        header_str = " ".join(f"{k}: {v}" for k, v in headers.items()) if headers else ""
+        raw_target = f"{path} {body} {header_str}".strip()
 
         # 1. Check known exploit patterns (Log4j, Spring4Shell, XSS, etc.)
         for pattern, tag, sev, sc, m in EXPLOIT_PAYLOAD_PATTERNS:

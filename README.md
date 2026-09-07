@@ -1,6 +1,21 @@
+<div align="center">
+
 # 🛡️ HoneyGuard: Intelligent Multi-Service Honeypot & SOC Telemetry Sentinel
 
-> **A deliberate, low-interaction Python honeypot mimicking vulnerable SSH & HTTP services with GeoIP enrichment, Discord/Slack alerting, real-time SOC dashboard, and CompTIA Security+ aligned IoC threat intelligence.**
+### Low-Interaction SSH & HTTP Decoys with GeoIP Enrichment, MITRE ATT&CK Mapping & Real-Time SOC Dashboard
+
+[![CI Status](https://github.com/Drizzy-ul/honeyguard/actions/workflows/ci.yml/badge.svg)](https://github.com/Drizzy-ul/honeyguard/actions)
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE-ATT%26CK%20Mapped-red.svg)](https://attack.mitre.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Security+](https://img.shields.io/badge/CompTIA-Security%2B%20Aligned-yellow.svg)](https://www.comptia.org/certifications/security)
+
+<p align="center">
+  A deliberate, low-interaction Python honeypot mimicking vulnerable SSH & HTTP services with GeoIP enrichment, Discord/Slack alerting, real-time SOC dashboard, and CompTIA Security+ aligned IoC threat intelligence.
+</p>
+
+</div>
 
 ---
 
