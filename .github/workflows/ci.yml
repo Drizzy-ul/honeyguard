@@ -1,4 +1,4 @@
-﻿name: CI & Threat Detection Tests
+name: CI & Threat Detection Tests
 
 on:
   push:
@@ -17,6 +17,7 @@ jobs:
         python-version: ["3.10", "3.11", "3.12"]
 
     env:
+      PYTHONPATH: "."
       PYTHONUTF8: "1"
       PYTHONIOENCODING: "utf-8"
 
@@ -35,4 +36,4 @@ jobs:
 
     - name: Run Threat Detection Tests
       run: |
-        pytest tests/ -v
+        python -m pytest tests/ -v
