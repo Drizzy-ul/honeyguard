@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ HoneyGuard: Intelligent Multi-Service Honeypot & SOC Telemetry Sentinel
+# ðŸ›¡ï¸ HoneyGuard: Intelligent Multi-Service Honeypot & SOC Telemetry Sentinel
 
 ### Low-Interaction SSH & HTTP Decoys with GeoIP Enrichment, MITRE ATT&CK Mapping & Real-Time SOC Dashboard
 
@@ -8,7 +8,8 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![MITRE ATT&CK](https://img.shields.io/badge/MITRE-ATT%26CK%20Mapped-red.svg)](https://attack.mitre.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](https://github.com/Drizzy-ul/honeyguard)](https://opensource.org/licenses/MIT)
 [![Security+](https://img.shields.io/badge/CompTIA-Security%2B%20Aligned-yellow.svg)](https://www.comptia.org/certifications/security)
 
 <p align="center">
@@ -19,40 +20,40 @@
 
 ---
 
-## 🎯 Architecture Overview
+## ðŸŽ¯ Architecture Overview
 
 ```
                         [ Attacker / Botnet ]
-                                  │
-          ┌───────────────────────┴───────────────────────┐
-          ▼                                               ▼
-┌──────────────────┐                            ┌──────────────────┐
-│   SSH Honeypot   │ (Port 2222)                │  HTTP Honeypot   │ (Port 8080)
-│ OpenSSH Decoy +  │                            │ Decoy Web Portal │
-│ Fake Bash Shell  │                            │ .env, wp-login   │
-└─────────┬────────┘                            └────────┬─────────┘
-          │                                              │
-          └───────────────────────┬──────────────────────┘
-                                  ▼
-                   ┌─────────────────────────────┐
-                   │     Threat Analysis Engine  │
-                   │  - IoC Extractor & Tagger   │
-                   │  - MITRE ATT&CK Classifier  │
-                   │  - GeoIP Telemetry Cache    │
-                   │  - Risk Score Calculator    │
-                   └──────────────┬──────────────┘
-                                  │
-          ┌───────────────────────┼───────────────────────┐
-          ▼                       ▼                       ▼
-┌──────────────────┐    ┌──────────────────┐    ┌──────────────────┐
-│ Discord / Slack  │    │  FastAPI SOC &   │    │  SIEM JSON Logs  │
-│  Alert Webhooks  │    │  WebSocket Feed  │    │ & SQLite DB IoCs │
-└──────────────────┘    └──────────────────┘    └──────────────────┘
+                                  â”‚
+          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+          â–¼                                               â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                            â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   SSH Honeypot   â”‚ (Port 2222)                â”‚  HTTP Honeypot   â”‚ (Port 8080)
+â”‚ OpenSSH Decoy +  â”‚                            â”‚ Decoy Web Portal â”‚
+â”‚ Fake Bash Shell  â”‚                            â”‚ .env, wp-login   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”˜                            â””â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+          â”‚                                              â”‚
+          â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                                  â–¼
+                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+                   â”‚     Threat Analysis Engine  â”‚
+                   â”‚  - IoC Extractor & Tagger   â”‚
+                   â”‚  - MITRE ATT&CK Classifier  â”‚
+                   â”‚  - GeoIP Telemetry Cache    â”‚
+                   â”‚  - Risk Score Calculator    â”‚
+                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                                  â”‚
+          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+          â–¼                       â–¼                       â–¼
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Discord / Slack  â”‚    â”‚  FastAPI SOC &   â”‚    â”‚  SIEM JSON Logs  â”‚
+â”‚  Alert Webhooks  â”‚    â”‚  WebSocket Feed  â”‚    â”‚ & SQLite DB IoCs â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
 
-## 🚀 Key Features
+## ðŸš€ Key Features
 
 1. **Fake SSH Honeypot (`services/ssh_honeypot.py`)**:
    - Paramiko-based low-interaction SSH server on port `2222`.
@@ -90,7 +91,7 @@
 
 ---
 
-## 🛠️ Installation & Quick Start
+## ðŸ› ï¸ Installation & Quick Start
 
 ### 1. Install Dependencies
 ```bash
@@ -118,7 +119,7 @@ http://127.0.0.1:8000
 
 ---
 
-## 🧪 Testing with Attack Simulator
+## ðŸ§ª Testing with Attack Simulator
 
 In a separate terminal, execute realistic attack simulations:
 
@@ -136,7 +137,7 @@ python simulator/attack_simulator.py --scenario ssh_dropper
 
 ---
 
-## 📡 REST API & IoC Export Endpoints
+## ðŸ“¡ REST API & IoC Export Endpoints
 
 - `GET /api/stats` - Summary KPI metrics and MITRE breakdown
 - `GET /api/events` - Filterable, paginated raw attack telemetry

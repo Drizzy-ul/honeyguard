@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  honeyguard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: honeyguard-sentinel
+    restart: unless-stopped
+    ports:
+      - "2222:2222"   # Decoy SSH Honeypot
+      - "8080:8080"   # Decoy HTTP Honeypot
+      - "8000:8000"   # FastAPI Real-time SOC Dashboard & API
+    environment:
+      - HONEYPOT_SSH_PORT=2222
+      - HONEYPOT_HTTP_PORT=8080
+      - DASHBOARD_PORT=8000
+      - ALERT_COOLDOWN_SECONDS=20
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL:-}
+    volumes:
+      - honeyguard_data:/app/data
+      - honeyguard_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  honeyguard_data:
+    driver: local
+  honeyguard_logs:
+    driver: local
