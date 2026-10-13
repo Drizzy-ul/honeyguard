@@ -1,4 +1,5 @@
 import time
+import threading
 import requests
 import asyncio
 from datetime import datetime, timezone
@@ -131,9 +132,11 @@ class AlertDispatcher:
 
     @classmethod
     def dispatch(cls, event: Dict[str, Any]):
-        """Dispatches event to active Dashboards, Webhooks, and Threat Logs."""
+        """Dispatches event to active Dashboards, Webhooks, and Threat Logs asynchronously."""
         broadcast_to_dashboards(event)
-        cls.send_discord_alert(event)
-        cls.send_slack_alert(event)
+        if settings.DISCORD_WEBHOOK_URL:
+            threading.Thread(target=cls.send_discord_alert, args=(event,), daemon=True).start()
+        if settings.SLACK_WEBHOOK_URL:
+            threading.Thread(target=cls.send_slack_alert, args=(event,), daemon=True).start()
 
 alert_dispatcher = AlertDispatcher()
